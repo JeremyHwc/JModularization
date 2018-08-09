@@ -72,3 +72,37 @@
         （1）配置简单，使用方便
         （2）高度的可定制性
         （3）强大的图片缓存机制
+        
+        加载异步图片步骤：(三级缓存)
+         
+         Bitmap在内存缓存中--------------------------------------------------------------->
+         
+         图片缓存在磁盘中------------------------->
+                                            Cache   Decode      Pre-process     cache       post-process    display
+                                            Image   image       bitmap          bitmap      bitmap          bitmap
+                                Download    On      into                        in
+         图片无缓存------------>image       Disk    Bitmap                      memory
+         
+## 第5章 首页列表开发与测试    
+    思路点拨：
+        如何在ListView中使用一个二维的数据结构？
+        如何让ViewPager实现无线的循环滑动？
+    首页列表功能开发：
+        请求我们的首页列表数据
+        利用数据初始化Adapter，及各种类型item
+        添加其他功能
+    开发步骤：
+        使用我们封装好的网络请求组件请求数据
+        初始化我们的首页ListView
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
