@@ -126,6 +126,77 @@
         封装视频播放器
         封装业务逻辑
         对外提供API，供外界调用
+    思路点拨
+        如何定义一个视频播放器
+        了解视频播放器声明周期吗
+        自定义视频播放器有哪些坑
+    三种实现方式
+        （1）VideoView  简单，但丑陋，几乎没有可定制型
+        （2）MediaPlayer + SufaceView 需要自己处理生命周期，复杂，可定制度高
+        （3）MediaPlayer + TextureView 同第二种，还可添加动画，在ListView等复杂控件中使用
+    常见的坑
+        （1）非常容易加载失败
+        （2）非常容易被回收
+        （3）会有偶尔的黑屏现象
+    核心知识串讲
+        MediaPlayer视频播放核心类
+        TextureView显示帧数据核心类（三种状态监听：available，change，destroy）
+        众多事件接口概述（主要监听mediaplayer当前处于哪些状态）
+            （1）MediaPlayer.onPreparedListener
+            （2）MediaPlayer.OnErrorListener（异常捕获）
+            （3）MediaPlayer.OnCompletionListener（播放完成）
+            （4）MediaPlayer.OnBufferingUpdateListener（缓冲过程中调用 ）
+    开发步骤
+        创建我们的播放器核心类CustomVideoView
+        完成我们的视频播放的生命周期方法和回调等
+        处理视频的其他逻辑（返回桌面，锁屏等）
+        
+    实现步骤
+        
+        load() --加载失败处理（三次重试）--> stop();
+        load() --加载成功-->onPrepared() --> pause
+                                         --> resume --> onComplete --> playback()
+                                                    --> onError 
+    哪些业务
+        根据露出屏幕百分比决定是否播放
+        小屏到全屏的切换播放
+        监听播放器产生的各种事件
+        统计我们视频播放次数
+    思路点拨
+        如何计算播放器在屏幕中出现的百分比
+        小屏播放到全屏播放能复用一个播放器吗
+        如何监听到播放器产生的各种事件  
+    开发步骤
+        监听播放器产生的各种事件并实现逻辑
+        完成画出屏幕暂停，划入屏幕自动播放功能
+    接口回调三部曲
+        （1）在B类中创建事件接口interface
+        （2）在A类中implements此接口
+        （3）在A类中创建B类实例时，同时为B类setListener
+        
+    全屏方案分析：
+        （1）启动一个新的activity
+            缺点：无法复用同一个播放器，所以必须加载2次
+                  资源消耗较大
+        （2）创建一个全屏显示的dialog
+            优点：可以解决播放器复用问题且资源消耗更小
+    
+    核心适应点串讲
+    
+        （1）Dialog生命周期相关函数：onCreate(),onWindowFoucusChanged(),dismiss()
+        （2）接口回调 --> 三部曲
+        
+    哪些接口
+        必要参数的构造方法
+        必要的对外功能API
+    思路点拨
+        创建VideoAdContext类对外提供功能
+    
+    视频播放SDK模块开发
+        （1）MediaPlayer及其众多接口，TextureView的实践
+        （2）MediaPlayer的声明周期（状态模式），外观模式，接口回调
+        （3）我们的一个思维流程
+            
     
          
          
